@@ -14,4 +14,4 @@ commonLabels:
 secretGenerator:
 - name: mattermost-mattermost-team-edition-config-json
   files:
-  - resources/config/config.json
+  - config.json=resources/config/config.json
