@@ -1,0 +1,60 @@
+---
+# Source: mattermost-team-edition/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mattermost-mattermost-team-edition
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+    rollingUpdate: null
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mattermost-team-edition
+      app.kubernetes.io/instance: mattermost
+      app.kubernetes.io/managed-by: Helm
+  template:
+    spec:
+      containers:
+      - name: mattermost-team-edition
+        image: "mattermost/mattermost-team-edition:release-5.27"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 8065
+          protocol: TCP
+        livenessProbe:
+          initialDelaySeconds: 90
+          timeoutSeconds: 5
+          periodSeconds: 15
+          httpGet:
+            path: /api/v4/system/ping
+            port: http
+        readinessProbe:
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+          periodSeconds: 15
+          httpGet:
+            path: /api/v4/system/ping
+            port: http
+        volumeMounts:
+        - mountPath: /mattermost/config/config.json
+          name: config-json
+          subPath: config.json
+        - mountPath: /mattermost/data
+          name: mattermost-data
+        - mountPath: /mattermost/plugins
+          name: mattermost-plugins
+        resources: {}
+      volumes:
+      - name: config-json
+        secret:
+          secretName: mattermost-mattermost-team-edition-config-json
+      - name: mattermost-data
+        persistentVolumeClaim:
+          claimName: mattermost-mattermost-team-edition
+      - name: mattermost-plugins
+        persistentVolumeClaim:
+          claimName: mattermost-mattermost-team-edition-plugins

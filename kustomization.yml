@@ -1,0 +1,17 @@
+resources:
+- resources/deployment.yaml
+- resources/service.yaml
+- resources/tests/mattermost-config-test.yaml
+- resources/tests/mattermost-test.yaml
+
+images:
+- name: mattermost/mattermost-team-edition
+  newTag: release-5.27
+
+commonLabels:
+  app.kubernetes.io/name: mattermost-team-edition
+
+secretGenerator:
+- name: mattermost-mattermost-team-edition-config-json
+  files:
+  - resources/config/config.json
