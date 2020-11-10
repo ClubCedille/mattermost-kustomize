@@ -1,19 +1,8 @@
----
-# Source: mattermost-team-edition/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: mattermost-team-edition
-  labels:
-    app.kubernetes.io/name: mattermost-team-edition
-    app.kubernetes.io/instance: mattermost
-    app.kubernetes.io/managed-by: Helm
-    helm.sh/chart: mattermost-team-edition-3.17.0
 spec:
-  selector:
-    app.kubernetes.io/name: mattermost-team-edition
-    app.kubernetes.io/instance: mattermost
-    app.kubernetes.io/managed-by: Helm
   type: NodePort
   ports:
   - port: 8065
