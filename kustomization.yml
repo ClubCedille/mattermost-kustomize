@@ -1,8 +1,6 @@
 resources:
 - resources/deployment.yaml
 - resources/service.yaml
-- resources/tests/mattermost-config-test.yaml
-- resources/tests/mattermost-test.yaml
 
 images:
 - name: mattermost/mattermost-team-edition
