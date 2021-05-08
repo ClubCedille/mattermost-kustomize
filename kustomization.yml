@@ -4,12 +4,8 @@ resources:
 
 images:
 - name: mattermost/mattermost-team-edition
-  newTag: release-5.27
+  newTag: release-5.34
 
 commonLabels:
   app.kubernetes.io/name: mattermost-team-edition
 
-secretGenerator:
-- name: mattermost-mattermost-team-edition-config-json
-  files:
-  - config.json=resources/config/config.json
